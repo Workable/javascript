@@ -1,6 +1,6 @@
-# Airbnb React/JSX Style Guide
+# Workable React/JSX Style Guide
 
-*A mostly reasonable approach to React and JSX*
+*Another take on mostly reasonable approach to React and JSX - This guide is an Airbnb fork*
 
 ## Table of Contents
 
