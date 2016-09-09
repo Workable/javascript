@@ -1,8 +1,9 @@
 # Workable JavaScript Style Guide
 
-*Another take on mostly reasonable approach to JavaScript*
+*Another take on mostly reasonable approach to JavaScript - This guide is an Airbnb fork*
 
-*This guide is an Airbnb fork*
+[![Download](https://img.shields.io/badge/download-es6-green.svg)](https://raw.githubusercontent.com/Workable/javascript/develop/linters/.eslintrc.js)
+[![Download](https://img.shields.io/badge/download-es5-green.svg)](https://raw.githubusercontent.com/Workable/javascript/develop/linters/es5/.eslintrc.js)
 
 Other Style Guides
  - [React](react/)
