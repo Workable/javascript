@@ -154,8 +154,70 @@ Download
     const item = {};
     ```
 
+  <a name="objects--prototype-delegation"></a><a name="3.2"></a>
+  - [3.2](#prototype-delegation) Use `Object.create(proto, propertiesObj)` to create an object that delegates to another. [`OLOO vs OO`](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md)
+
+    Read more about [prototype delegation](https://medium.com/javascript-scene/the-two-pillars-of-javascript-ee6f3281e7f3#.ggwgn0g7d)
+
+    > Why? Prototype delegation is more powerful than classical inheritance.
+
+    ```javascript
+    // classical OO
+    function Foo(who) {
+        this.me = who;
+    }
+
+    Foo.prototype.identify = function() {
+        return "I am " + this.me;
+    };
+
+    function Bar(who) {
+        Foo.call(this,who);
+    }
+
+    Bar.prototype = Object.create(Foo.prototype);
+    // NOTE: .constructor is borked here, need to fix
+
+    Bar.prototype.speak = function() {
+        alert("Hello, " + this.identify() + ".");
+    };
+
+    var b1 = new Bar("b1");
+    var b2 = new Bar("b2");
+
+    b1.speak();
+    b2.speak();
+
+
+    // Object -> Object
+    var Foo = {
+      init: function(who) {
+          this.me = who;
+      },
+      identify: function() {
+          return "I am " + this.me;
+      }
+    };
+
+    var Bar = Object.create(Foo);
+
+    Bar.speak = function() {
+        alert("Hello, " + this.identify() + ".");
+    };
+
+    var b1 = Object.create(Bar);
+    b1.init("b1");
+    var b2 = Object.create(Bar);
+    b2.init("b2");
+
+    b1.speak();
+    b2.speak();
+    ```
+
   <a name="es6-computed-properties"></a><a name="3.4"></a>
   - [3.4](#es6-computed-properties) Use computed property names when creating objects with dynamic property names.
+
+    Without spaces, eslint: [`computed-property-spacing`](http://eslint.org/docs/rules/computed-property-spacing)  
 
     > Why? They allow you to define all the properties of an object in one place.
 
@@ -213,12 +275,12 @@ Download
 
     // bad
     const obj = {
-      lukeSkywalker: lukeSkywalker,
+      lukeSkywalker: lukeSkywalker
     };
 
     // good
     const obj = {
-      lukeSkywalker,
+      lukeSkywalker
     };
     ```
 
@@ -238,7 +300,7 @@ Download
       lukeSkywalker,
       episodeThree: 3,
       mayTheFourth: 4,
-      anakinSkywalker,
+      anakinSkywalker
     };
 
     // good
@@ -248,7 +310,7 @@ Download
       episodeOne: 1,
       twoJediWalkIntoACantina: 2,
       episodeThree: 3,
-      mayTheFourth: 4,
+      mayTheFourth: 4
     };
     ```
 
@@ -271,26 +333,6 @@ Download
     bar: 4,
     'data-blah': 5,
   };
-  ```
-
-  <a name="objects--prototype-builtins"></a>
-  - [3.9](#objects--prototype-builtins) Do not call `Object.prototype` methods directly, such as `hasOwnProperty`, `propertyIsEnumerable`, and `isPrototypeOf`.
-
-  > Why? These methods may be shadowed by properties on the object in question - consider `{ hasOwnProperty: false }` - or, the object may be a null object (`Object.create(null)`).
-
-  ```javascript
-  // bad
-  console.log(object.hasOwnProperty(key));
-
-  // good
-  console.log(Object.prototype.hasOwnProperty.call(object, key));
-
-  // best
-  const has = Object.prototype.hasOwnProperty; // cache the lookup once, in module scope.
-  /* or */
-  const has = require('has');
-  …
-  console.log(has.call(object, key));
   ```
 
 **[⬆ back to top](#table-of-contents)**
