@@ -3,6 +3,7 @@ module.exports = {
   "env": {
     "browser": true,
     "commonjs": true,
+    "mocha": true,
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -57,7 +58,7 @@ module.exports = {
     "computed-property-spacing": [1, "never"],
     "consistent-this": [1, "that"],
     "func-names": 0,
-    "func-style": 0,
+    "func-style": [2, "declaration"],
     "id-length": 0,
     "lines-around-comment": 0,
     "linebreak-style": [1, "unix"],
@@ -157,6 +158,7 @@ module.exports = {
     "no-undefined": 1,
     "no-unused-vars": [1],
     "no-use-before-define": 2,
+    "no-useless-escape": 1,
     "handle-callback-err": 1,
     "no-mixed-requires": 1,
     "no-new-require": 1,
@@ -238,7 +240,9 @@ module.exports = {
     "prefer-const": 1,
     "prefer-spread": 1,
     "prefer-reflect": 1,
+    "prefer-template": 1,
     "require-yield": 1,
+    "template-curly-spacing": [2, "never"],
 
     /* React */
     "jsx-quotes": [1, "prefer-single"],
