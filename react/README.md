@@ -28,7 +28,7 @@
 
 ## Class vs `React.createClass` vs stateless
 
-  - If you have internal state and/or refs, prefer `class extends React.Component` over `React.createClass` unless you have a very good reason to use mixins. eslint: [`react/prefer-es6-class`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md) [`react/prefer-stateless-function`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md)
+  - If you have internal state and/or refs, prefer `class extends React.Component` over `React.createClass` unless you have a very good reason to use mixins or you have many listeners that you would have to manually `bind`. eslint: [`react/prefer-es6-class`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md) [`react/prefer-stateless-function`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md)
 
     ```jsx
     // bad
@@ -46,6 +46,54 @@
         return <div>{this.state.hello}</div>;
       }
     }
+
+    // good
+    const Listing = React.createClass({
+      mixins: [AwesomeMixin],
+      render() {
+        return <div>{this.state.hello}</div>;
+      }
+    });
+
+    // good
+    class Listing extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);  
+      },
+
+      handleClick() {
+        this.setState(prevState => ({
+          isToggleOn: !prevState.isToggleOn
+        }));
+      },
+
+      render() {
+         return (
+           <button onClick={this.handleClick}>
+             {this.state.isToggleOn ? 'ON' : 'OFF'}
+           </button>
+         );
+       }
+    }
+
+    // good
+    const Listing = React.createClass({
+      // we avoid binding lots of methods
+      render() {
+        return (
+          <button
+            onClick={this.handleClick}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
+            onFoo={this.handleFoo}
+            onBar={this.handleBar}
+          >
+            {this.state.isToggleOn ? 'ON' : 'OFF'}
+          </button>
+        );
+      }
+    });
     ```
 
     And if you don't have state or refs, prefer normal functions (not arrow functions) over classes:
@@ -74,10 +122,10 @@
 
     ```jsx
     // bad
-    import reservationCard from './ReservationCard';
+    import reservationCard from './reservationCard';
 
     // good
-    import ReservationCard from './ReservationCard';
+    import ReservationCard from './reservationCard';
 
     // bad
     const ReservationItem = <ReservationCard />;
@@ -86,17 +134,17 @@
     const reservationItem = <ReservationCard />;
     ```
 
-  - **Component Naming**: Use the filename as the component name. For example, `ReservationCard.jsx` should have a reference name of `ReservationCard`. However, for root components of a directory, use `index.jsx` as the filename and use the directory name as the component name:
+  - **Component Naming**: Use the filename as the component name. For example, `reservationCard.js` should have a reference name of `ReservationCard`. However, for root components of a directory, use `index.js` as the filename and use the directory name as the component name:
 
     ```jsx
     // bad
-    import Footer from './Footer/Footer';
+    import Footer from './footer/footer';
 
     // bad
-    import Footer from './Footer/index';
+    import Footer from './footer/index';
 
     // good
-    import Footer from './Footer';
+    import Footer from './footer';
     ```
   - **Higher-order Component Naming**: Use a composite of the higher-order component's name and the passed-in component's name as the `displayName` on the generated component. For example, the higher-order component `withFoo()`, when passed a component `Bar` should produce a component with a `displayName` of `withFoo(Bar)`.
 
@@ -169,23 +217,23 @@
 
 ## Quotes
 
-  - Always use double quotes (`"`) for JSX attributes, but single quotes for all other JS. eslint: [`jsx-quotes`](http://eslint.org/docs/rules/jsx-quotes)
+  - Always use single quotes (`'`) for JSX attributes. eslint: [`jsx-quotes`](http://eslint.org/docs/rules/jsx-quotes)
 
-  > Why? JSX attributes [can't contain escaped quotes](http://eslint.org/docs/rules/jsx-quotes), so double quotes make contractions like `"don't"` easier to type.
-  > Regular HTML attributes also typically use double quotes instead of single, so JSX attributes mirror this convention.
+  > Why? Although JSX attributes [can't contain escaped quotes](http://eslint.org/docs/rules/jsx-quotes), so double quotes make contractions like `"don't"` easier to type, we
+  prefer the uniformity between JSX and JS.
 
     ```jsx
     // bad
-    <Foo bar='bar' />
-
-    // good
     <Foo bar="bar" />
 
+    // good
+    <Foo bar='bar' />
+
     // bad
-    <Foo style={{ left: "20px" }} />
+    <Foo style={{left: "20px"}} />
 
     // good
-    <Foo style={{ left: '20px' }} />
+    <Foo style={{left: '20px'}} />
     ```
 
 ## Spacing
@@ -217,7 +265,7 @@
     <Foo bar={baz} />
     ```
 
-## Props (TODO: decide on boolean)
+## Props
 
   - Always use camelCase for prop names.
 
@@ -248,59 +296,6 @@
       hidden
     />
     ```
-
-  - Always include an `alt` prop on `<img>` tags. If the image is presentational, `alt` can be an empty string or the `<img>` must have `role="presentation"`. eslint: [`jsx-a11y/img-has-alt`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-has-alt.md)
-
-    ```jsx
-    // bad
-    <img src="hello.jpg" />
-
-    // good
-    <img src="hello.jpg" alt="Me waving hello" />
-
-    // good
-    <img src="hello.jpg" alt="" />
-
-    // good
-    <img src="hello.jpg" role="presentation" />
-    ```
-
-  - Do not use words like "image", "photo", or "picture" in `<img>` `alt` props. eslint: [`jsx-a11y/img-redundant-alt`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md)
-
-  > Why? Screenreaders already announce `img` elements as images, so there is no need to include this information in the alt text.
-
-    ```jsx
-    // bad
-    <img src="hello.jpg" alt="Picture of me waving hello" />
-
-    // good
-    <img src="hello.jpg" alt="Me waving hello" />
-    ```
-
-  - Use only valid, non-abstract [ARIA roles](https://www.w3.org/TR/wai-aria/roles#role_definitions). eslint: [`jsx-a11y/aria-role`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-role.md)
-
-    ```jsx
-    // bad - not an ARIA role
-    <div role="datepicker" />
-
-    // bad - abstract ARIA role
-    <div role="range" />
-
-    // good
-    <div role="button" />
-    ```
-
-  - Do not use `accessKey` on elements. eslint: [`jsx-a11y/no-access-key`](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-access-key.md)
-
-  > Why? Inconsistencies between keyboard shortcuts and keyboard commands used by people using screenreaders and keyboards complicate accessibility.
-
-  ```jsx
-  // bad
-  <div accessKey="h" />
-
-  // good
-  <div />
-  ```
 
   - Avoid using an array index as `key` prop, prefer a unique ID. ([why?](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318))
 
@@ -335,6 +330,11 @@
     // good
     <Foo
       ref={ref => { this.myRef = ref; }}
+    />
+
+    // good
+    <Foo
+      ref={ref => ( this.myRef = ref; )}
     />
     ```
 
@@ -378,7 +378,7 @@
     <Foo className="stuff" />
     ```
 
-  - (TODO: decide on this) If your component has multi-line properties, close its tag on a new line. eslint: [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
+  - If your component has multi-line properties, close its tag on a new line. eslint: [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
 
     ```jsx
     // bad
@@ -474,12 +474,12 @@
     ```jsx
     // bad
     render() {
-      (<div />);
+      <div />;
     }
 
     // good
     render() {
-      return (<div />);
+      return <div />;
     }
     ```
 
