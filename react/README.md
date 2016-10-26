@@ -87,8 +87,7 @@
             onBlur={this.handleBlur}
             onFocus={this.handleFocus}
             onFoo={this.handleFoo}
-            onBar={this.handleBar}
-          >
+            onBar={this.handleBar} >
             {this.state.isToggleOn ? 'ON' : 'OFF'}
           </button>
         );
@@ -188,7 +187,7 @@
     }
     ```
 
-## Alignment (TODO: decide between tag-aligned and props-aligned)
+## Alignment
 
   - Follow these alignment styles for JSX syntax. eslint: [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
 
@@ -209,8 +208,7 @@
     // children get indented normally
     <Foo
       superLongParam="bar"
-      anotherSuperLongParam="baz"
-    >
+      anotherSuperLongParam="baz" >
       <Quux />
     </Foo>
     ```
