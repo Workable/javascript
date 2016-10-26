@@ -256,7 +256,7 @@ module.exports = {
     "react/jsx-closing-bracket-location": [1, {selfClosing: 'tag-aligned', nonEmpty: 'after-props'}],
     "react/jsx-boolean-value": 1,
     "react/jsx-curly-spacing": [2, "never"],
-    "react/no-string-refs": 1,
+    "react/no-string-refs": 2,
     "react/wrap-multilines": 1,
     "react/self-closing-comp": 1,
     "react/jsx-no-duplicate-props": 1,
@@ -272,7 +272,6 @@ module.exports = {
     "react/no-did-update-set-state": 1,
     "react/no-unknown-property": 1,
     "react/react-in-jsx-scope": 1,
-    "react/prop-types": 2,
-    "react/no-string-refs": 2,
+    "react/prop-types": 2
   }
 }
