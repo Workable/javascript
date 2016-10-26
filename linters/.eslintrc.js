@@ -248,23 +248,29 @@ module.exports = {
     "template-curly-spacing": [2, "never"],
 
     /* React */
-    "jsx-quotes": [1, "prefer-single"],
+    "jsx-quotes": [1, "prefer-double"],
+    "react/prefer-es6-class": 1,
+    "react/jsx-pascal-case": 1,
     "react/display-name": 0,
+    "react/jsx-closing-bracket-location": [1, 'props-aligned'],
     "react/jsx-boolean-value": 1,
     "react/jsx-no-duplicate-props": 1,
     "react/jsx-no-undef": 1,
+    "react/jsx-no-bind": 1,
     "react/jsx-sort-props": 0,
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
+    "react/jsx-curly-spacing": [2, "never"],
     "react/no-danger": 1,
     "react/no-did-mount-set-state": 1,
     "react/no-did-update-set-state": 1,
-    "react/no-multi-comp": 0,
+    "react/no-multi-comp": [1, {"ignoreStateless": true}],
     "react/no-unknown-property": 1,
     "react/react-in-jsx-scope": 1,
     "react/self-closing-comp": 1,
     "react/sort-comp": 1,
     "react/wrap-multilines": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "react/no-string-refs": 2,
   }
 }

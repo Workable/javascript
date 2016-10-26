@@ -70,9 +70,6 @@
     ```
 
 ## Naming
-
-  - **Extensions**: Use `.jsx` extension for React components.
-  - **Filename**: Use PascalCase for filenames. E.g., `ReservationCard.jsx`.
   - **Reference Naming**: Use PascalCase for React components and camelCase for their instances. eslint: [`react/jsx-pascal-case`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md)
 
     ```jsx
@@ -143,7 +140,7 @@
     }
     ```
 
-## Alignment
+## Alignment (TODO: decide between tag-aligned and props-aligned)
 
   - Follow these alignment styles for JSX syntax. eslint: [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
 
@@ -220,7 +217,7 @@
     <Foo bar={baz} />
     ```
 
-## Props
+## Props (TODO: decide on boolean)
 
   - Always use camelCase for prop names.
 
@@ -381,7 +378,7 @@
     <Foo className="stuff" />
     ```
 
-  - If your component has multi-line properties, close its tag on a new line. eslint: [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
+  - (TODO: decide on this) If your component has multi-line properties, close its tag on a new line. eslint: [`react/jsx-closing-bracket-location`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
 
     ```jsx
     // bad
