@@ -505,8 +505,16 @@ Download
     // the caller selects only the data they need
     const { left, top } = processInput(input);
     ```
-
-
+    
+  <a name="destructuring-variable-renaming"></a><a name="5.4"></a>
+  - [5.4](#destructuring--object-over-array) Use object destructuring to rename variables. Useful when converting snaked_cased vars to camelCased.
+    
+    ```javascript
+    const obj = {foo_bar: 42};
+    const {foo_bar: fooBar} = obj;
+    console.log(fooBar);
+    ```
+    
 **[⬆ back to top](#table-of-contents)**
 
 ## Strings
